@@ -35,11 +35,10 @@ def toStrH(img_obj):
     #print(length)
 
     for i in range(1, length):
+        last_element = i - 1
+        current_element = i
         if i % width == 0:
             horizontal_str += "\n"
-
-        last_element = i-1
-        current_element = i
 
         if np_img[current_element] != np_img[last_element]:
             horizontal_str += "L:"
@@ -55,6 +54,11 @@ def toStrH(img_obj):
             horizontal_str += " "
 
     print(horizontal_str)
+
+def toFile(text, file):
+    thisfile = open(file, "w")
+    thisfile.write(text)
+    thisfile.close()
 
 
 a = imOpen("Ocean.bmp")
