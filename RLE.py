@@ -17,11 +17,10 @@ def toStrV(img_obj):
     print(width, height)
     np_img = np.array(img_obj).flatten()
 
-    horizontal_str = "V "
-    horizontal_str += str(width)
-    horizontal_str += " "
-    horizontal_str += str(height)
-    horizontal_str += "\n"
+    vertical_str = "V "
+    vertical_str += str(width)
+    vertical_str += " "
+    vertical_str += str(height)
 
     pixel_value = np_img[0]
     print(f"np img: {np_img[0]}")
@@ -32,24 +31,24 @@ def toStrV(img_obj):
     for i in range(0, width):
         for j in range(0, height):
             if j % width-1 == 0:
-                horizontal_str += "\n"
+                vertical_str += "\n"
             if np_img[j] != pixel_value:
-                horizontal_str += "PV"
-                horizontal_str += str(pixel_value)
-                horizontal_str += " "
-                horizontal_str += "F"
-                horizontal_str += str(first_element)
-                horizontal_str += " "
-                horizontal_str += "L"
-                horizontal_str += str(last_element)
-                horizontal_str += " "
+                #vertical_str += "PV"
+                vertical_str += str(pixel_value)
+                vertical_str += " "
+                #vertical_str += "F"
+                vertical_str += str(first_element)
+                vertical_str += " "
+                #vertical_str += "L"
+                vertical_str += str(last_element)
+                vertical_str += " "
 
                 pixel_value = np_img[j]
                 first_element = j
             last_element = j
 
     # print(horizontal_str)
-    return horizontal_str
+    return vertical_str
 
 
 def toStrH(img_obj):
@@ -61,7 +60,6 @@ def toStrH(img_obj):
     horizontal_str += str(width)
     horizontal_str += " "
     horizontal_str += str(height)
-    horizontal_str += "\n"
 
     pixel_value = np_img[0]
     first_element = 0
@@ -72,13 +70,13 @@ def toStrH(img_obj):
             if j % width-1 == 0:
                 horizontal_str += "\n"
             if np_img[j] != pixel_value:
-                horizontal_str += "PV"
+                #horizontal_str += "PV"
                 horizontal_str += str(pixel_value)
                 horizontal_str += " "
-                horizontal_str += "F"
+                #horizontal_str += "F"
                 horizontal_str += str(first_element)
                 horizontal_str += " "
-                horizontal_str += "L"
+                #horizontal_str += "L"
                 horizontal_str += str(last_element)
                 horizontal_str += " "
 
@@ -87,19 +85,30 @@ def toStrH(img_obj):
             last_element = j
 
     # print(horizontal_str)
+    print(len(horizontal_str))
     return horizontal_str
 
-def toFile(text, file):
-    thisfile = open(file, "w")
-    thisfile.write(text)
+
+def toFile(rle_string, filename):
+    thisfile = open(filename, "w")
+    thisfile.write(rle_string)
     thisfile.close()
+
+    text = open(filename, "r")
+
+    count = 0
+    for line in text:
+        words = line.split(" ")
+        for word in words:
+            count += 1
+    print(f"count {count}")
 
     return thisfile
 
 
 a = imOpen("Bars.bmp")
-s = toStrV(a)
-toFile(s, "Bars_V.txt")
+vs = toStrV(a)
+toFile(vs, "Bars_V.txt")
 
-x = toStrH(a)
-toFile(x,"Bars_H.txt" )
+hs = toStrH(a)
+toFile(hs,"Bars_H.txt" )
